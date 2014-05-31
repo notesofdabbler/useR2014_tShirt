@@ -91,6 +91,9 @@ for (file in file_list) {
 library(data.table)
 dat <- rbindlist(logs)
 
+# delete the CRANlogs directory
+unlink("CRANlogs",recursive=TRUE)
+
 # find number of downloads of packages
 library(dplyr)
 pkgcount=dat%>%group_by(package)%>%summarize(downloads=n())%>%arrange(desc(downloads))
@@ -111,7 +114,8 @@ df$package=pkgcountTop$package
 df$pkgcount=pkgcountTop$count
 df$colornum=seq(1,numptsR) # here just a rank ordering is used for coloring
 
-ggplot(data=df,aes(x=Rx,y=Ry))+geom_text(aes(label=package,angle=30,color=as.numeric(colornum)),size=1.5,fontface="bold")+
+ggplot(data=df,aes(x=Rx,y=Ry))+
+  geom_text(aes(label=package,angle=30,color=as.numeric(colornum)),size=1.5,fontface="bold")+
   facet_grid(Rgrpy~Rgrpx)+
   theme(axis.ticks=element_blank(),axis.text=element_blank(),strip.text=element_blank(),
         strip.background=element_blank(),legend.position="none")+
