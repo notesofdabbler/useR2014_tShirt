@@ -42,3 +42,18 @@ Rgrpy=rep(seq(1,3),each=24*8)
 df2=data.frame(R=R,Rx2=Rx2,Ry2=Ry2,Rgrpx=Rgrpx,Rgrpy=Rgrpy)
 df2=subset(df2,R==1)
 ggplot(data=df2,aes(x=Rx2,y=Ry2))+geom_point(size=4)+facet_grid(Rgrpy~Rgrpx)
+
+pkgcnt2=pkgcnt[1:342,]
+
+df2$package=pkgcnt2$package
+df2$pkgcnt=pkgcnt2$count
+df2$pkgcnt2=seq(1,342)
+
+ggplot(data=df2,aes(x=Rx2,y=Ry2))+geom_text(aes(label=package,angle=30,color=as.numeric(pkgcnt2)),size=1.5,fontface="bold")+
+  facet_grid(Rgrpy~Rgrpx)+
+  theme(axis.ticks=element_blank(),axis.text=element_blank(),strip.text=element_blank(),
+        strip.background=element_blank(),legend.position="none")+
+  xlab("")+ylab("")+
+  ggtitle("useR!2014")+theme(plot.title=element_text(face="bold.italic",size=10))
+
+ggsave("user2014_tShirt_entry.jpg",width=4,height=4)
