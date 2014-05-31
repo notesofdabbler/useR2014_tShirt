@@ -7,6 +7,10 @@
 library(ggplot2)
 library(scales)
 
+# set working directory
+setwd("~/notesofdabbler/user2014_TshirtEntry/")
+
+
 # code taken from github initial commit 
 R<-c(rep(1,19),rep(0,5), 
      rep(1,20),rep(0,4),
