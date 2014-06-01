@@ -1,6 +1,6 @@
 #
 # Entry for user!12014 T-shirt
-# Author: rdabbler
+# Author: notesofdabbler
 #
 
 # load libraries
@@ -13,46 +13,25 @@ setwd("~/notesofdabbler/user2014_TshirtEntry/")
 
 
 # code taken from github initial commit 
-R<-c(rep(1,19),rep(0,5), 
-     rep(1,20),rep(0,4),
-     rep(1,22),rep(0,2),
-     rep(1,6),rep(0,10),rep(1,7),0,
-     rep(1,6),rep(0,11),rep(1,7),
-     rep(1,6),rep(0,12),rep(1,6),
-     rep(1,6),rep(0,12),rep(1,6), 
-     rep(1,6),rep(0,12),rep(1,6),
-     rep(1,6),rep(0,12),rep(1,6),
-     rep(1,6),rep(0,10),rep(1,7),0,
-     rep(1,23),0,
-     rep(1,22),rep(0,2),
-     rep(1,21),rep(0,3),
-     rep(1,19),rep(0,5),
-     rep(1,6),rep(0,7),rep(1,5),rep(0,6),
-     rep(1,6),rep(0,8),rep(1,4),rep(0,6),
-     rep(1,6),rep(0,8),rep(1,5),rep(0,5),
-     rep(1,6),rep(0,9),rep(1,4),rep(0,5),
-     rep(1,6),rep(0,9),rep(1,5),rep(0,4),
-     rep(1,6),rep(0,10),rep(1,4),rep(0,4),
-     rep(1,6),rep(0,10),rep(1,5),rep(0,3),
-     rep(1,6),rep(0,11),rep(1,5),rep(0,2),
-     rep(1,6),rep(0,11),rep(1,6),rep(0,1),
-     rep(1,6),rep(0,12),rep(1,6))
+R<-c(rep(1,19),rep(0,5),rep(1,20),rep(0,4),rep(1,22),rep(0,2),rep(1,6),rep(0,10),rep(1,7),0,
+     rep(1,6),rep(0,11),rep(1,7),rep(1,6),rep(0,12),rep(1,6),rep(1,6),rep(0,12),rep(1,6), 
+     rep(1,6),rep(0,12),rep(1,6),rep(1,6),rep(0,12),rep(1,6),rep(1,6),rep(0,10),rep(1,7),0,
+     rep(1,23),0,rep(1,22),rep(0,2),rep(1,21),rep(0,3),rep(1,19),rep(0,5),
+     rep(1,6),rep(0,7),rep(1,5),rep(0,6),rep(1,6),rep(0,8),rep(1,4),rep(0,6),
+     rep(1,6),rep(0,8),rep(1,5),rep(0,5),rep(1,6),rep(0,9),rep(1,4),rep(0,5),
+     rep(1,6),rep(0,9),rep(1,5),rep(0,4),rep(1,6),rep(0,10),rep(1,4),rep(0,4),
+     rep(1,6),rep(0,10),rep(1,5),rep(0,3),rep(1,6),rep(0,11),rep(1,5),rep(0,2),
+     rep(1,6),rep(0,11),rep(1,6),rep(0,1),rep(1,6),rep(0,12),rep(1,6))
 
 # Create x and y coordinates for plotting letter R
-# Goal is to split the letter R into a 3x3 grid
-
-# here the x and y coordiates are created for each panel of 3x3 grid
-Rx=rep(seq(1,8),24*3)
-Ry=rep(rep(seq(8,1),each=24),3)
-# xpanel label and yplanel label is attached to enable faceting
-Rgrpx=rep(rep(seq(1,3),each=8),24)
-Rgrpy=rep(seq(1,3),each=24*8)
+Rx=rep(seq(1,24),24)
+Ry=rep(seq(24,1),each=24)
 # data for plotting letter R is gathered into a data frame
-df=data.frame(R=R,Rx=Rx,Ry=Ry,Rgrpx=Rgrpx,Rgrpy=Rgrpy)
+df=data.frame(R=R,Rx=Rx,Ry=Ry)
 # rows with R=0 are not part of the plot
 df=subset(df,R==1)
 # test of graph with just points
-#ggplot(data=df,aes(x=Rx,y=Ry))+geom_point(size=4)+facet_grid(Rgrpy~Rgrpx)
+#ggplot(data=df,aes(x=Rx,y=Ry))+geom_point(size=4)
 
 #---------------Finding top downloaded CRAN packages during 3 months (Feb-Apr 2014)-----------------------
 # This piece of code is from http://www.nicebread.de/finally-tracking-cran-packages-downloads/  
@@ -121,9 +100,10 @@ df$colornum=seq(1,numptsR) # here just a rank ordering is used for coloring
 
 ggplot(data=df,aes(x=Rx,y=Ry))+
   geom_text(aes(label=package,angle=30,color=as.numeric(colornum)),size=1.5,fontface="bold")+
-  facet_grid(Rgrpy~Rgrpx)+theme_bw()+
-  theme(axis.ticks=element_blank(),axis.text=element_blank(),strip.text=element_blank(),
-        strip.background=element_blank(),legend.position="none",panel.margin=unit(0,"inches"))+
+  theme_bw()+
+  theme(axis.ticks=element_blank(),axis.text=element_blank(),legend.position="none",
+        plot.background = element_blank(),panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank(),panel.border = element_blank())+
   xlab("")+ylab("")+scale_color_gradient2(low="blue",mid="green",high="red",midpoint=floor(numptsR/2))+
   ggtitle("useR!2014")+theme(plot.title=element_text(face="bold.italic",size=10))
 
