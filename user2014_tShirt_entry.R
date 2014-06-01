@@ -6,6 +6,7 @@
 # load libraries
 library(ggplot2)
 library(scales)
+library(grid)
 
 # set working directory
 setwd("~/notesofdabbler/user2014_TshirtEntry/")
@@ -120,9 +121,9 @@ df$colornum=seq(1,numptsR) # here just a rank ordering is used for coloring
 
 ggplot(data=df,aes(x=Rx,y=Ry))+
   geom_text(aes(label=package,angle=30,color=as.numeric(colornum)),size=1.5,fontface="bold")+
-  facet_grid(Rgrpy~Rgrpx)+
+  facet_grid(Rgrpy~Rgrpx)+theme_bw()+
   theme(axis.ticks=element_blank(),axis.text=element_blank(),strip.text=element_blank(),
-        strip.background=element_blank(),legend.position="none")+
+        strip.background=element_blank(),legend.position="none",panel.margin=unit(0,"inches"))+
   xlab("")+ylab("")+scale_color_gradient2(low="blue",mid="green",high="red",midpoint=floor(numptsR/2))+
   ggtitle("useR!2014")+theme(plot.title=element_text(face="bold.italic",size=10))
 
